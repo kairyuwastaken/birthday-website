@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Frost Tulip</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Trebuchet MS', sans-serif;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 4 / 5;
+    margin-top: 3.2em;
+  }
+
+  svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  .flower { animation: sway 7s ease-in-out infinite; transform-origin: 340px 620px; }
+  @keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    50%      { transform: rotate(1.4deg); }
+  }
+
+  .leafL { animation: leafSway1 6s ease-in-out infinite; transform-origin: 300px 700px; }
+  .leafR { animation: leafSway2 6.5s ease-in-out infinite; transform-origin: 380px 720px; }
+  @keyframes leafSway1 { 0%,100%{transform:rotate(0deg);} 50%{transform:rotate(-2.5deg);} }
+  @keyframes leafSway2 { 0%,100%{transform:rotate(0deg);} 50%{transform:rotate(2.5deg);} }
+
+  .firefly { animation: rise 9s ease-in-out infinite; }
+  @keyframes rise {
+    0%   { transform: translateY(0); opacity: 0; }
+    15%  { opacity: 0.9; }
+    85%  { opacity: 0.9; }
+    100% { transform: translateY(-60px); opacity: 0; }
+  }
+
+  .caption {
+    position: absolute;
+    bottom: -2.4em;
+    width: 100%;
+    text-align: center;
+    color: #7fa8c9;
+    letter-spacing: 0.35em;
+    font-size: 0.68em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .message {
+    position: absolute;
+    top: -3.4em;
+    width: 100%;
+    text-align: center;
+    color: #eaf6fd;
+    opacity: 0;
+    animation: fadeInMsg 2s ease-out 0.6s forwards;
+  }
+
+  .message .line1 {
+    display: block;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95em;
+    letter-spacing: 0.03em;
+    color: #bcd9ea;
+    opacity: 0.85;
+    text-shadow: 0 0 10px rgba(140,200,255,0.4);
+  }
+
+  .message .line2 {
+    display: block;
+    font-family: 'Brush Script MT', 'Segoe Script', 'Lucida Handwriting', cursive;
+    font-size: 2.1em;
+    margin-top: 0.15em;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(140,200,255,0.7), 0 0 6px rgba(255,255,255,0.5);
+  }
+
+  @keyframes fadeInMsg {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+<svg viewBox="0 0 680 850" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="skyGlow" cx="50%" cy="35%" r="65%">
+      <stop offset="0%"  stop-color="#0b1a26" stop-opacity="0.9"/>
+      <stop offset="55%" stop-color="#050e16" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Outer petal: dusky blue to pale icy white -->
+    <linearGradient id="petalOuter" x1="0%" y1="100%" x2="10%" y2="0%">
+      <stop offset="0%"  stop-color="#1c3244"/>
+      <stop offset="30%" stop-color="#3d6a89"/>
+      <stop offset="62%" stop-color="#9dc9e2"/>
+      <stop offset="100%" stop-color="#eef7fc"/>
+    </linearGradient>
+
+    <!-- Side petal, slightly brighter -->
+    <linearGradient id="petalSide" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%"  stop-color="#22394a"/>
+      <stop offset="35%" stop-color="#5488a6"/>
+      <stop offset="68%" stop-color="#bcdcec"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <!-- Inner petal glow — brightest, near-white core -->
+    <linearGradient id="petalInner" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%"  stop-color="#284a5e"/>
+      <stop offset="45%" stop-color="#a9d6ec"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <linearGradient id="stemGrad" x1="0%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#3a5a70"/>
+      <stop offset="100%" stop-color="#0a1620"/>
+    </linearGradient>
+
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f7fa3"/>
+      <stop offset="55%" stop-color="#2c5570"/>
+      <stop offset="100%" stop-color="#0e2331"/>
+    </linearGradient>
+
+    <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="haze" x="-150%" y="-150%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+
+    <filter id="fineBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="0.8"/>
+    </filter>
+
+    <!-- Classic tulip petal: rounded base, gentle point, slight outward curl at tip -->
+    <path id="tulipPetal"
+      d="M0,0
+         C -34,-14 -46,-58 -40,-110
+         C -36,-148 -22,-182 0,-210
+         C 22,-182 36,-148 40,-110
+         C 46,-58 34,-14 0,0
+         Z"/>
+  </defs>
+
+  <rect width="680" height="850" fill="url(#skyGlow)"/>
+  <rect width="680" height="850" fill="#000000" opacity="0.001"/>
+  <circle cx="340" cy="360" r="230" fill="#123249" opacity="0.3" filter="url(#haze)"/>
+  <circle cx="340" cy="340" r="150" fill="#8fc7e6" opacity="0.2" filter="url(#haze)"/>
+
+  <!-- soft floating light motes -->
+  <g fill="#dff1fb">
+    <circle class="firefly" cx="180" cy="600" r="2.2" style="animation-delay:0s"/>
+    <circle class="firefly" cx="500" cy="640" r="1.8" style="animation-delay:1.8s"/>
+    <circle class="firefly" cx="220" cy="500" r="1.6" style="animation-delay:3.4s"/>
+    <circle class="firefly" cx="470" cy="450" r="2" style="animation-delay:5s"/>
+    <circle class="firefly" cx="380" cy="700" r="1.4" style="animation-delay:2.6s"/>
+  </g>
+
+  <!-- Stem -->
+  <path d="M340,428 C 330,560 350,660 336,800"
+        stroke="url(#stemGrad)" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M340,428 C 330,560 350,660 336,800"
+        stroke="#a8e0a0" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Leaves: broad, sword-like, characteristic of a tulip -->
+  <path class="leafL" d="M328,660
+           C 250,650 170,600 110,510
+           C 190,530 260,560 300,610
+           C 260,570 210,540 150,505
+           C 230,505 300,540 328,610
+           Z"
+        fill="url(#leafGrad)" opacity="0.95"/>
+
+  <path class="leafR" d="M352,690
+           C 430,672 500,615 555,520
+           C 480,548 415,585 372,635
+           C 412,590 465,560 520,520
+           C 445,528 380,568 352,635
+           Z"
+        fill="url(#leafGrad)" opacity="0.92"/>
+
+  <!-- Flower head -->
+  <g class="flower">
+    <!-- Back two petals (partially hidden, darker) -->
+    <g filter="url(#glow)" transform="translate(340,400)">
+      <use href="#tulipPetal" transform="rotate(-38) translate(0,4) scale(1.06)" fill="url(#petalOuter)" opacity="0.9"/>
+      <use href="#tulipPetal" transform="rotate(38) translate(0,4) scale(1.06)" fill="url(#petalOuter)" opacity="0.9"/>
+    </g>
+
+    <!-- Side petals -->
+    <g filter="url(#glow)" transform="translate(340,400)">
+      <use href="#tulipPetal" transform="rotate(-20) scale(1.1)" fill="url(#petalSide)"/>
+      <use href="#tulipPetal" transform="rotate(20) scale(1.1)"  fill="url(#petalSide)"/>
+    </g>
+
+    <!-- Front two petals, brightest, form the goblet mouth -->
+    <g filter="url(#glow)" transform="translate(340,400)">
+      <use href="#tulipPetal" transform="rotate(-6) scale(1.14)" fill="url(#petalInner)"/>
+      <use href="#tulipPetal" transform="rotate(6) scale(1.14)"  fill="url(#petalInner)"/>
+    </g>
+
+    <!-- Petal vein detail -->
+    <g transform="translate(340,400)" stroke="#cfe8f5" stroke-width="1" opacity="0.4" filter="url(#fineBlur)">
+      <path d="M0,-15 C -6,-90 -8,-150 0,-205" transform="rotate(-6)"/>
+      <path d="M0,-15 C 6,-90 8,-150 0,-205"  transform="rotate(6)"/>
+      <path d="M0,-15 C -6,-90 -8,-150 0,-205" transform="rotate(-20)"/>
+      <path d="M0,-15 C 6,-90 8,-150 0,-205"  transform="rotate(20)"/>
+    </g>
+
+    <!-- Cup shadow at throat -->
+    <ellipse cx="340" cy="420" rx="34" ry="18" fill="#0d2233" opacity="0.6" filter="url(#fineBlur)"/>
+
+    <!-- Stamens peeking from the cup -->
+    <g stroke="#bcd9ea" stroke-width="2.4" opacity="0.9" transform="translate(340,412)">
+      <path d="M0,0 L -14,-26"/>
+      <path d="M0,0 L -4,-30"/>
+      <path d="M0,0 L 8,-28"/>
+      <path d="M0,0 L 18,-22"/>
+    </g>
+    <g fill="#3a6b8c" opacity="0.85" transform="translate(340,412)">
+      <ellipse cx="-14" cy="-26" rx="4" ry="8" transform="rotate(-20 -14 -26)"/>
+      <ellipse cx="-4"  cy="-30" rx="3.6" ry="7.5"/>
+      <ellipse cx="8"   cy="-28" rx="3.8" ry="7.8" transform="rotate(15 8 -28)"/>
+      <ellipse cx="18"  cy="-22" rx="4" ry="8" transform="rotate(30 18 -22)"/>
+    </g>
+  </g>
+</svg>
+<div class="message">
+  <span class="line1">always bloom as gracefully as the tulips and never lose that spark.</span>
+  <span class="line2">Happy Birthday, stupid.</span>
+</div>
+<div class="caption">Frost Tulip &middot; Nocturne</div>
+</div>
+</body>
+</html>
